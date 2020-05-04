@@ -180,7 +180,7 @@ var makeMGraph = function(className, plotdata, title) {
         {headers: ['Read_IO', 'Write_IO'], addopts: [multiyIO, {y2label: 'IO per Sec, #'}]},
 		{headers: ['S5hrd'], addopts: [multiyFarMem, {ylabel: 'CPU Load/MigrFromFar, %'}, {y2label: 'Syscalls per Sec, #'}]},
         {headers: ['Read_KB', 'Write_KB'], addopts: [multiyKB, {y2label: 'KiB per Sec, KiB'}]},
-        {headers: ['InPkts', 'OutPkts'], addopts: [{width: plotwidth+87}, {ylabel: 'Pkts per Sec, Pkts'}, multiyNetKB, {y2label: 'KiB per Sec, KiB'}]},
+//        {headers: ['InPkts', 'OutPkts'], addopts: [{width: plotwidth+87}, {ylabel: 'Pkts per Sec, Pkts'}, multiyNetKB, {y2label: 'KiB per Sec, KiB'}]},
         {headers: ['Read_KB', 'Write_KB', 'Read_IO', 'Write_IO'], addopts: [{width: plotwidth+87}]}
     ]
 
