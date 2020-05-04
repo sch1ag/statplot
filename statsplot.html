@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">
+    <meta http-equiv="X-UA-Compatible" charset="UTF-8" content="IE=EmulateIE7; IE=EmulateIE9">
     <title>Overall Performance</title>
 
     <script type="text/javascript" src="code/dygraph-combined.js"></script>
@@ -60,7 +60,7 @@
 <script type='text/javascript'>
 
 var makeMGraph = function(className, plotdata, title) {
-  console.log(plotdata.slice(0, plotdata.indexOf("\n")));
+  //console.log(plotdata.slice(0, plotdata.indexOf("\n")));
   var div = document.createElement('div');
   div.className = className;
   div.style.display = 'inline-block';
@@ -81,8 +81,6 @@ var makeMGraph = function(className, plotdata, title) {
         height: document.documentElement.clientWidth/3,
         title: title,
         delimiter: ',',
-        xAxisLabelWidth: 70,
-	yAxisLabelWidth: 80,
         xlabel: "Time",
         legend: 'always',
         labelsSeparateLines: true,
@@ -104,16 +102,20 @@ var makeMGraph = function(className, plotdata, title) {
         axes: {
                x: {
                     valueFormatter: function(ms) {
-                      return new Date(ms).strftime('%Y-%m-%d %H:%M:%S');
+                        return new Date(ms).toLocaleFormat('%Y-%m-%d %H:%M:%S');
                     },
                     pixelsPerLabel: 70,
+					axisLabelWidth: 70,
                 },
+			   y: {
+			        axisLabelWidth: 80, 
+			    },
               }
         }
 
   var multiyIO = {
         'Read_IO': {
-          axis: {},
+          axis: {axisLabelWidth: 80,},
           fillGraph: true,
           fillAlpha: 0.3
         },
@@ -122,9 +124,14 @@ var makeMGraph = function(className, plotdata, title) {
           fillGraph: true,
           fillAlpha: 0.3        
         }}
-
+		
+  var multiyFarMem = {
+        'sysc': {
+          axis: {axisLabelWidth: 80,},
+        }}
+		
   var multiyKB = {
-        'Read_KB':{axis: {},
+        'Read_KB':{axis: {axisLabelWidth: 80,},
                      fillGraph: true,
                      fillAlpha: 0.3
         }, 'Write_KB': {axis: 'Read_KB',
@@ -133,7 +140,7 @@ var makeMGraph = function(className, plotdata, title) {
         }}
 
   var multiyNetKB = {
-        'InKB':{axis: {},
+        'InKB':{axis: {axisLabelWidth: 80,},
                      fillGraph: true,
                      fillAlpha: 0.3
         }, 'OutKB': {axis: 'InKB',
@@ -145,7 +152,7 @@ var makeMGraph = function(className, plotdata, title) {
         axes: {
             x: {
                 valueFormatter: function(ms) {
-                    return new Date(ms).strftime('%Y-%m-%d %H:%M:%S');
+                    return new Date(ms).toLocaleFormat('%Y-%m-%d %H:%M:%S');
                 },
                 pixelsPerLabel: 70,
             },
@@ -153,6 +160,7 @@ var makeMGraph = function(className, plotdata, title) {
                 valueFormatter: function(val, opts, series_name, dygraph) {
                     return dygraph.getValue(dygraph.getSelection(),dygraph.indexFromSetName(series_name)) ;
                 },
+				axisLabelWidth: 80, 
             },
         },
         stackedGraph: true
@@ -166,6 +174,7 @@ var makeMGraph = function(className, plotdata, title) {
         {headers: ['RunQ', 'VmmQ', 'RawQ'], addopts: [{ylabel: 'CPU Queue, #'}]},
         {headers: ['Read_SRV', 'Write_SRV', 'Total_WAIT', 'Total_SRV'], addopts: [{ylabel: 'Service Time, ms'}]},
         {headers: ['Read_IO', 'Write_IO'], addopts: [multiyIO, {y2label: 'IO per Sec, #'}]},
+		{headers: ['S5hrd'], addopts: [multiyFarMem, {ylabel: 'CPU Load/MigrFromFar, %'}, {y2label: 'Syscalls per Sec, #'}]},
         {headers: ['Read_KB', 'Write_KB'], addopts: [multiyKB, {y2label: 'KiB per Sec, KiB'}]},
         {headers: ['InPkts', 'OutPkts'], addopts: [{width: plotwidth+87}, {ylabel: 'Pkts per Sec, Pkts'}, multiyNetKB, {y2label: 'KiB per Sec, KiB'}]},
         {headers: ['Read_KB', 'Write_KB', 'Read_IO', 'Write_IO'], addopts: [{width: plotwidth+87}]}
