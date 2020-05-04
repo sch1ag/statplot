@@ -27,6 +27,10 @@
 <label for="width">Plot width (blank=auto): </label><input type="text" name="width" id="width" pattern='[0-9]+'>
 
 <script>
+Date.prototype.toLocaleFormat = Date.prototype.toLocaleFormat || function(pattern) {
+    return pattern.replace(/%Y/g, this.getFullYear()).replace(/%m/g, (this.getMonth() + 1)).replace(/%d/g, this.getDate()).replace(/%H/g, this.getHours()).replace(/%M/g, this.getMinutes()).replace(/%S/g, this.getSeconds());
+};
+
   clientwidth = document.documentElement.clientWidth
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
