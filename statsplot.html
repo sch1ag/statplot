@@ -35,7 +35,8 @@
     for (var i = 0, f; f = files[i]; i++) {
 
       // Only process text files.
-      if (!f.type.match('text.*')) {
+      if (! f.name.match(/\.csv$/)) {
+	alert("File " + f.name + " is not a csv file!")
         continue;
       }
 
@@ -68,7 +69,7 @@ var makeMGraph = function(className, plotdata, title) {
   btn.onclick = function(){this.parentNode.parentNode.removeChild(this.parentNode)}
   document.body.appendChild(div);
   
-  plotwidth = document.getElementById('width').value != ''  ?  document.getElementById('width').value : 0.97 * clientwidth ;
+  plotwidth = document.getElementById('width').value != ''  ?  parseInt(document.getElementById('width').value) : 0.97 * clientwidth ;
   
   var general = {
         width: plotwidth,
@@ -103,7 +104,7 @@ var makeMGraph = function(className, plotdata, title) {
                 },
               }
         }
-      
+
   var multiyIO = {
         'Read_IO': {
           axis: {},
@@ -147,7 +148,8 @@ var makeMGraph = function(className, plotdata, title) {
         {headers: ['RunQ', 'VmmQ', 'RawQ'], addopts: [{ylabel: 'CPU Queue, #'}]},
         {headers: ['Read_SRV', 'Write_SRV'], addopts: [{ylabel: 'Service Time, ms'}]},
         {headers: ['Read_IO', 'Write_IO'], addopts: [multiyIO, {y2label: 'IO per Sec, #'}]},
-        {headers: ['Read_KB', 'Write_KB'], addopts: [multiyKB, {y2label: 'KiB per Sec, KiB'}]}
+        {headers: ['Read_KB', 'Write_KB'], addopts: [multiyKB, {y2label: 'KiB per Sec, KiB'}]},
+        {headers: ['Read_KB', 'Write_KB', 'Read_IO', 'Write_IO'], addopts: [{width: plotwidth+87}]}
     ]
 
   headers = plotdata.slice(0, plotdata.indexOf("\n")).split(',');
