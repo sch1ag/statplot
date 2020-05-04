@@ -64,11 +64,16 @@ var makeMGraph = function(className, plotdata, title) {
   var div = document.createElement('div');
   div.className = className;
   div.style.display = 'inline-block';
+
   var btn=document.createElement("BUTTON");
-  btn.appendChild(document.createTextNode("CLOSE"));
+  btn.appendChild(document.createTextNode("Close"));
   btn.onclick = function(){this.parentNode.parentNode.removeChild(this.parentNode)}
-  document.body.appendChild(div);
   
+  var lbtn=document.createElement("BUTTON");
+  lbtn.appendChild(document.createTextNode("Log/Norm"));
+  lbtn.onclick = function(){ g.updateOptions({ logscale: !g.getOption("logscale") });}
+  document.body.appendChild(div);
+
   plotwidth = document.getElementById('width').value != ''  ?  parseInt(document.getElementById('width').value) : 0.97 * clientwidth ;
   
   var general = {
@@ -170,6 +175,7 @@ var makeMGraph = function(className, plotdata, title) {
       general
       );
   div.appendChild(btn);
+  div.appendChild(lbtn);
 };
 
 </script>
