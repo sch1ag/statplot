@@ -133,6 +133,13 @@ var makeMGraph = function(className, plotdata, title) {
         'sysc': {
           axis: {axisLabelWidth: 80,},
         }}
+  var multiyLOST_count = {
+        'LOST_count': {
+          axis: {axisLabelWidth: 80, independentTicks: true, drawGrid: true, gridLinePattern: [2,3]},
+          connectSeparatedPoints: false,
+          pointSize: 3,
+          color: 'red',
+        }}
 		
   var multiyKB = {
         'Read_KB':{axis: {axisLabelWidth: 80,},
@@ -178,7 +185,8 @@ var makeMGraph = function(className, plotdata, title) {
         {headers: ['RunQ', 'VmmQ', 'RawQ'], addopts: [{ylabel: 'CPU Queue, #'}]},
         {headers: ['Read_SRV', 'Write_SRV', 'Total_WAIT', 'Total_SRV'], addopts: [{ylabel: 'Service Time, ms'}]},
         {headers: ['Read_IO', 'Write_IO'], addopts: [multiyIO, {y2label: 'IO per Sec, #'}]},
-		{headers: ['S5hrd'], addopts: [multiyFarMem, {ylabel: 'CPU Load/MigrFromFar, %'}, {y2label: 'Syscalls per Sec, #'}]},
+        {headers: ['S5hrd'], addopts: [multiyFarMem, {ylabel: 'CPU Load/MigrFromFar, %'}, {y2label: 'Syscalls per Sec, #'}]},
+        {headers: ['LOST_count'], addopts: [{width: plotwidth+87}, multiyLOST_count, {ylabel: 'RoundTrip, ms'}, {y2label: 'lost icmp, #'}]},
         {headers: ['Read_KB', 'Write_KB'], addopts: [multiyKB, {y2label: 'KiB per Sec, KiB'}]},
 //        {headers: ['InPkts', 'OutPkts'], addopts: [{width: plotwidth+87}, {ylabel: 'Pkts per Sec, Pkts'}, multiyNetKB, {y2label: 'KiB per Sec, KiB'}]},
         {headers: ['Read_KB', 'Write_KB', 'Read_IO', 'Write_IO'], addopts: [{width: plotwidth+87}]}
