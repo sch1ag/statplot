@@ -208,6 +208,29 @@ var makeMGraph = function(className, plotdata, title) {
       plotdata,
       general
       );
+
+
+var series_selector = document.createElement('div');
+
+var gLabels = g.getLabels();
+for (i = 1; i < gLabels.length; i++)
+{
+    var checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.name = gLabels[i];
+    checkbox.checked = true;
+    checkbox.id = i-1;
+    checkbox.onclick = function(){g.setVisibility(this.id, this.checked)};
+
+    var label = document.createElement('label');
+    label.htmlFor = i-1;
+    label.appendChild(document.createTextNode(gLabels[i]));
+
+    series_selector.appendChild(checkbox);
+    series_selector.appendChild(label);
+}
+
+  div.appendChild(series_selector);
   div.appendChild(btn);
   div.appendChild(lbtn);
 };
