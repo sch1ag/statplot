@@ -31,6 +31,7 @@ Date.prototype.toLocaleFormat = Date.prototype.toLocaleFormat || function(patter
     return pattern.replace(/%Y/g, this.getFullYear()).replace(/%m/g, (this.getMonth() + 1)).replace(/%d/g, this.getDate()).replace(/%H/g, this.getHours()).replace(/%M/g, this.getMinutes()).replace(/%S/g, this.getSeconds());
 };
 
+
   clientwidth = document.documentElement.clientWidth
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -215,15 +216,16 @@ var series_selector = document.createElement('div');
 var gLabels = g.getLabels();
 for (i = 1; i < gLabels.length; i++)
 {
+    var checkbox_id = 'chkbx_' + (i-1).toString() + '_' + uuidv4();
     var checkbox = document.createElement('input');
     checkbox.type = "checkbox";
-    checkbox.name = gLabels[i];
+    checkbox.name = gLabels[i] + '_' + checkbox_id;
     checkbox.checked = true;
-    checkbox.id = i-1;
-    checkbox.onclick = function(){g.setVisibility(this.id, this.checked)};
+    checkbox.id = checkbox_id;
+    checkbox.onclick = function(){g.setVisibility(this.id.split("_")[1], this.checked)};
 
     var label = document.createElement('label');
-    label.htmlFor = i-1;
+    label.htmlFor = checkbox_id;
     label.appendChild(document.createTextNode(gLabels[i]));
 
     series_selector.appendChild(checkbox);
@@ -235,6 +237,11 @@ for (i = 1; i < gLabels.length; i++)
   div.appendChild(lbtn);
 };
 
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
 </script>
 </body>
 </html>
